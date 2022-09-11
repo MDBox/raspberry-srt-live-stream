@@ -64,17 +64,25 @@ def stream(
         thread_srt.start()
         print('started srt thread')
 
-        while True:
-            time.sleep(30)
-            if not thread_camera.is_alive():
-                print('The camera thread crashed')
-                sys.exit(1)
-            if not thread_gst.is_alive():
-                print('The gst thread crashed')
-                sys.exit(1)
-            if not thread_srt.is_alive():
-                print('The srt thread stopped')
-                sys.exit(1)
+        try:
+            while True:
+                time.sleep(30)
+                if not thread_camera.is_alive():
+                    typer.echo('The camera thread crashed')
+                    sys.exit(1)
+                if not thread_gst.is_alive():
+                    typer.echo('The gst thread crashed')
+                    sys.exit(1)
+                if not thread_srt.is_alive():
+                    typer.echo('The srt thread stopped')
+                    sys.exit(1)
+        except KeyboardInterrupt:
+            typer.echo("Video Camera Stopping...")
+            camera_pipe.stop()
+            thread_camera.join(10)
+            thread_gst.join(10)
+            thread_srt.join(10)
+
 
 
 if __name__ == '__main__':

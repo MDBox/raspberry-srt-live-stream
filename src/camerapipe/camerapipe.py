@@ -5,6 +5,7 @@ class CameraPipe:
         self._pipe = pipe
         self._max_kbps = max_kbps
         self._fps = fps
+        self._is_active = True
 
         pipeline = dai.Pipeline()
 
@@ -46,9 +47,9 @@ class CameraPipe:
 
             with open(self._pipe, 'wb') as output_pipe:
                 print('Video Camera Started: Ctrl+c to stop')
-                try:
-                    while True:
-                        h265_packet = video_queue.get()
-                        output_pipe.write(h265_packet.getData().tobytes())
-                except KeyboardInterrupt:
-                    print("Video Camera Stopping...")
+                while self._is_active:
+                    h265_packet = video_queue.get()
+                    output_pipe.write(h265_packet.getData().tobytes())
+
+    def stop(self):
+        self._is_active = False
