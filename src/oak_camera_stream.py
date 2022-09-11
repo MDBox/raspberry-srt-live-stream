@@ -66,14 +66,13 @@ def stream(
 
         while True:
             time.sleep(30)
-            typer.echo('checking threads')
-            if not thread_camera.isAlive():
+            if not thread_camera.is_alive():
                 print('The camera thread crashed')
                 sys.exit(1)
-            if not thread_gst.isAlive():
+            if not thread_gst.is_alive():
                 print('The gst thread crashed')
                 sys.exit(1)
-            if not thread_srt.isAlive():
+            if not thread_srt.is_alive():
                 print('The srt thread stopped')
                 sys.exit(1)
 
