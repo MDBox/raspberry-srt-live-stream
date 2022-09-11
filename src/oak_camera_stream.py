@@ -6,7 +6,7 @@ import os
 import sys
 import time
 from camerapipe import CameraPipe
-from steam import GSTProcess, SRTProcess
+from stream import GSTProcess, SRTProcess
 
 def main():
     with tempfile.TemporaryDirectory() as tempdir:
