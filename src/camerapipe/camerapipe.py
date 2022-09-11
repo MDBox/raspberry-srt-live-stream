@@ -22,7 +22,7 @@ class CameraPipe:
 
 
         video_encoder_h265 = pipeline.create(dai.node.VideoEncoder)
-        video_encoder_h265.setDefaultProfilePreset(camera.getVideoSize(), camera.getFps(), dai.VideoEncoderProperties.Profile.H265_MAIN)
+        video_encoder_h265.setDefaultProfilePreset(camera.getFps(), dai.VideoEncoderProperties.Profile.H265_MAIN)
         video_encoder_h265.setBitrateKbps(self._max_kbps)
 
         camera_output = pipeline.create(dai.node.XLinkOut)
@@ -35,6 +35,7 @@ class CameraPipe:
 
 
     def start(self):
+        print('camera thread active')
         with dai.Device(self.pipeline) as device:
             video_queue = device.getOutputQueue(name='h265', maxSize=30, blocking=True)
             video_input_control_queue = device.getInputQueue(name='inputControl')

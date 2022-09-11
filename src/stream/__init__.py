@@ -1,2 +1,2 @@
-from gstpipe import *
-from srtpipe import *
+from .gstpipe import *
+from .srtpipe import *

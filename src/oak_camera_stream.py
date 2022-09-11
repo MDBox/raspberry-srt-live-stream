@@ -52,17 +52,21 @@ def stream(
         thread_camera = threading.Thread(target=camera_pipe.start())
         thread_camera.daemon = False
         thread_camera.start()
+        print('started camera thread')
 
         thread_gst = threading.Thread(target=gst_pipe.start())
         thread_gst.daemon = False
         thread_gst.start()
+        print('started gst thread')
 
         thread_srt = threading.Thread(target=srt_pipe.start())
         thread_srt.daemon = False
         thread_srt.start()
+        print('started srt thread')
 
         while True:
             time.sleep(30)
+            typer.echo('checking threads')
             if not thread_camera.isAlive():
                 print('The camera thread crashed')
                 sys.exit(1)

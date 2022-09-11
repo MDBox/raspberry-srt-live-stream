@@ -1,1 +1,1 @@
-from camerapipe import *
+from .camerapipe import *
