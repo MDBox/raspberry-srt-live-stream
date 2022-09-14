@@ -26,11 +26,17 @@ class CameraPipe:
         video_encoder_h265.setDefaultProfilePreset(camera.getFps(), dai.VideoEncoderProperties.Profile.H265_MAIN)
         video_encoder_h265.setBitrateKbps(self._max_kbps)
 
+        video_encoder_h264 = pipeline.create(dai.node.VideoEncoder)
+        video_encoder_h264.setDefaultProfilePreset(camera.getFps(), dai.VideoEncoderProperties.Profile.H264_MAIN)
+
         camera_output = pipeline.create(dai.node.XLinkOut)
+        camera_output_264 = pipeline.create(dai.node.XLinkOut)
         camera_output.setStreamName('h265')
+        camera_output_264.setStreamName('h264')
 
         camera.video.link(video_encoder_h265.input)
         video_encoder_h265.bitstream.link(camera_output.input)
+        video_encoder_h264.bitstream.link(camera_output.input)
 
         self.pipeline = pipeline
 
@@ -39,17 +45,20 @@ class CameraPipe:
         print('camera thread active')
         with dai.Device(self.pipeline) as device:
             video_queue = device.getOutputQueue(name='h265', maxSize=30, blocking=True)
+            video_queue_264 = device.getOutputQueue(name='h264', maxSize=30, blocking=True)
             video_input_control_queue = device.getInputQueue(name='inputControl')
 
             input_control = dai.CameraControl()
             input_control.setSceneMode(dai.CameraControl.SceneMode.ACTION)
             video_input_control_queue.send(input_control)
 
-            with open(self._pipe, 'wb') as output_pipe:
+            with open(self._pipe, 'wb') as output_pipe, open('video.h264', 'wb') as out_file:
                 print('Video Camera Started: Ctrl+c to stop')
                 while self._is_active:
                     h265_packet = video_queue.get()
                     output_pipe.write(h265_packet.getData().tobytes())
+                    h264_packet = video_queue_264.get()
+                    h264_packet.getData().tofile(out_file)
 
     def stop(self):
         self._is_active = False

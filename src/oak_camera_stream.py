@@ -4,7 +4,6 @@ import typer
 import threading
 import tempfile
 import os
-import sys
 import time
 from camerapipe import CameraPipe
 from stream import GSTProcess, SRTProcess
@@ -69,21 +68,19 @@ def stream(
                 time.sleep(30)
                 if not thread_camera.is_alive():
                     typer.echo('The camera thread crashed')
-                    sys.exit(1)
+                    typer.Exit(1)
                 if not thread_gst.is_alive():
                     typer.echo('The gst thread crashed')
-                    sys.exit(1)
+                    typer.Exit(1)
                 if not thread_srt.is_alive():
                     typer.echo('The srt thread stopped')
-                    sys.exit(1)
+                    typer.Exit(1)
         except KeyboardInterrupt:
             typer.echo("Video Camera Stopping...")
             camera_pipe.stop()
             thread_camera.join(10)
             thread_gst.join(10)
             thread_srt.join(10)
-
-
 
 if __name__ == '__main__':
     app()

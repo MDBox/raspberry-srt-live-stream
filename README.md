@@ -15,7 +15,7 @@ How to set up an affordable and portable live stream for IRL adventures.
 This tiny camera packs a punch in compute power.
 But the main reason for this project is the onboard h265 video encoder. 
 Without the onboard encoder you would need to the Pi to encode the video 
-stream in h264 which will drain battery life use a higher bitrate.
+stream in h264 which will drain battery and use a higher bitrate.
 
 ## Set up the Pi
 
@@ -23,19 +23,19 @@ The quickest way to get started is to download the prebuilt image from Luxonis.
 This almost includes everything you need to run the stream. 
 I will also provide steps to install everything using the base Raspberry Pi image.
 
-[//]: # (If you want to skip the setup process I will provide a super custom image that is ready to go.)
+If you want to skip the setup process I will provide a super custom image that is ready to go.
 
-[//]: # (This image will be a sponsor only link. This is in order to recover costs to store and distribute the image.)
+This image will be a sponsor only link. This is in order to recover costs to store and distribute the image.
 
-[//]: # (Once you have the image you are free to send it to anyone or host it yourself. )
+Once you have the image you are free to send it to anyone or host it yourself. 
 
-[//]: # (### Sponsor Access Image -> [Become a sponsor]&#40;&#41;)
+### Sponsor Access Image -> [Become a sponsor]()
 
-[//]: # ()
-[//]: # (This image is ready to go. Just flash it to an SDcard and plug it into your Pi.)
 
-[//]: # ()
-[//]: # (- [Custom Raspberry Pi Image]&#40;&#41;)
+This image is ready to go. Just flash it to an SDcard and plug it into your Pi.
+
+
+- [Custom Raspberry Pi Image]()
 
 Feel Free to redistribute a self-hosted copy of this image!
 
@@ -49,8 +49,8 @@ Feel Free to redistribute a self-hosted copy of this image!
 
 ```shell
 sudo curl -fL https://docs.luxonis.com/install_dependencies.sh | bash
-
-python3 -m pip install depthai
+python -m pip install --upgrade pip
+python -m pip install depthai
 ```
 
 #### SRT (Secure Reliable Transport)
@@ -73,9 +73,8 @@ sudo make install
 
 #### Audio/Bluetooth Speaker
 
-If your PI has bluetooth you can turn it onto an audio receiver. 
-This is useful if you want to use the mic from your smartphone. 
-I will explain later how to mux the audio and video feed.  
+If you wish you can enable bluetooth and turn the Pi into a portable audio receiver.
+This is useful if you want to use the mic from your smartphone.
 
 ```shell
 # For Audio and bluetooth mic proxy
@@ -92,7 +91,7 @@ bluetoothctl
 #### GStreamer
 
 We use gstreamer as a way to repackage the h265 stream from the camera and mux into mpegts.
-Doing this makes it possible to transport over UDP or SRT.  
+Doing this makes it possible to transport over UDP or SRT. There maybe other python libraries that can do the same thing but gstreamer is awesome.
 
 ```shell
 sudo apt-get update
