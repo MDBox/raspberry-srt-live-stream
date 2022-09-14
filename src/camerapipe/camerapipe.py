@@ -35,8 +35,9 @@ class CameraPipe:
         camera_output_264.setStreamName('h264')
 
         camera.video.link(video_encoder_h265.input)
+        camera.video.link(video_encoder_h264.input)
         video_encoder_h265.bitstream.link(camera_output.input)
-        video_encoder_h264.bitstream.link(camera_output.input)
+        video_encoder_h264.bitstream.link(camera_output_264.input)
 
         self.pipeline = pipeline
 
