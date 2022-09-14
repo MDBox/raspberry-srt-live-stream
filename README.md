@@ -17,6 +17,16 @@ But the main reason for this project is the onboard h265 video encoder.
 Without the onboard encoder you would need to the Pi to encode the video 
 stream in h264 which will drain battery and use a higher bitrate.
 
+## Command Interface
+
+```shell
+python oak_camera_stream.py srt://remote-server.com
+
+python oak_camera_stream.py --help
+```
+
+<img src="docs/command.png" alt="drawing" width="500"/>
+
 ## Set up the Pi
 
 The quickest way to get started is to download the prebuilt image from Luxonis.
