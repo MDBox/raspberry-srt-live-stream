@@ -12,6 +12,8 @@ class CameraPipe:
 
         camera = pipeline.create(dai.node.ColorCamera)
         camera.setBoardSocket(dai.CameraBoardSocket.RGB)
+        if self._flip:
+            camera.setImageOrientation(dai.CameraImageOrientation.VERTICAL_FLIP)
         camera.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
 
         camera_input_config = pipeline.create(dai.node.XLinkIn)
@@ -54,10 +56,6 @@ class CameraPipe:
             input_control = dai.CameraControl()
             input_control.setSceneMode(dai.CameraControl.SceneMode.ACTION)
             video_input_control_queue.send(input_control)
-
-            input_config = dai.ImageManipConfig()
-            input_config.setHorizontalFlip(self._flip)
-            video_input_config_queue.send(input_config)
 
 
             with open(self._pipe, 'wb') as output_pipe, open('video.h264', 'wb') as out_file:
