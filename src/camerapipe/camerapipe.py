@@ -1,11 +1,12 @@
 import depthai as dai
 
 class CameraPipe:
-    def __init__(self, pipe: str, max_kbps: int = 500, fps: int = 30):
+    def __init__(self, pipe: str, max_kbps: int = 500, fps: int = 30, flip: bool = True):
         self._pipe = pipe
         self._max_kbps = max_kbps
         self._fps = fps
         self._is_active = True
+        self._flip = flip
 
         pipeline = dai.Pipeline()
 
@@ -48,10 +49,16 @@ class CameraPipe:
             video_queue = device.getOutputQueue(name='h265', maxSize=30, blocking=True)
             video_queue_264 = device.getOutputQueue(name='h264', maxSize=30, blocking=True)
             video_input_control_queue = device.getInputQueue(name='inputControl')
+            video_input_config_queue = device.getInputQueue(name='inputConfig')
 
             input_control = dai.CameraControl()
             input_control.setSceneMode(dai.CameraControl.SceneMode.ACTION)
             video_input_control_queue.send(input_control)
+
+            input_config = dai.ImageManipConfig()
+            input_config.setHorizontalFlip(self._flip)
+            video_input_config_queue.send(input_config)
+
 
             with open(self._pipe, 'wb') as output_pipe, open('video.h264', 'wb') as out_file:
                 print('Video Camera Started: Ctrl+c to stop')
