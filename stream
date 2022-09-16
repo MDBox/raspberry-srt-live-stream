@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+sys.path.append(f"{os.getcwd()}/src")
+
+from oak_camera_stream import app
+
+if __name__ == '__main__':
+    app()

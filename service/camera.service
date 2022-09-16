@@ -1,0 +1,14 @@
+[Unit]
+Description=Camera Service
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=/home/pi
+ExecStart=/bin/bash -c "python stream_udp.py"
+KillMode=process
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target
