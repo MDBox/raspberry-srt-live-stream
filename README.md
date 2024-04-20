@@ -25,7 +25,7 @@ python oak_camera_stream.py srt://remote-server.com
 python oak_camera_stream.py --help
 ```
 
-<img src="docs/command.png" alt="drawing" width="500"/>
+<img src="./docs/command.png" alt="drawing" width="500"/>
 
 ## Set up the Pi
 
@@ -40,14 +40,6 @@ This image will be a sponsor only link. This is in order to recover costs to sto
 Once you have the image you are free to send it to anyone or host it yourself. 
 
 ### Sponsor Access Image -> [Become a sponsor]()
-
-
-This image is ready to go. Just flash it to an SDcard and plug it into your Pi.
-
-
-- [Custom Raspberry Pi Image]()
-
-Feel Free to redistribute a self-hosted copy of this image!
 
 ### Easy Way (Download prebuilt image)
 - [Raspberry Pi Image for Oak Camera](https://docs.luxonis.com/projects/hardware/en/latest/pages/guides/raspberrypi.html)
